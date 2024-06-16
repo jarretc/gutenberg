@@ -111,8 +111,7 @@ function FontLibraryProvider( { children } ) {
 	};
 
 	// Library Fonts
-	const [ modalTabOpen, setModalTabOpen ] = useState( false );
-	const [ libraryFontSelected, setLibraryFontSelected ] = useState( null );
+	const [ activeModalContent, setActiveModalContent ] = useState( false );
 
 	// Themes Fonts are the fonts defined in the global styles (database persisted theme.json data).
 	const themeFonts = fontFamilies?.theme
@@ -132,32 +131,6 @@ function FontLibraryProvider( { children } ) {
 				.map( ( f ) => setUIValuesNeeded( f, { source: 'custom' } ) )
 				.sort( ( a, b ) => a.name.localeCompare( b.name ) )
 		: [];
-
-	useEffect( () => {
-		if ( ! modalTabOpen ) {
-			setLibraryFontSelected( null );
-		}
-	}, [ modalTabOpen ] );
-
-	const handleSetLibraryFontSelected = ( font ) => {
-		setNotice( null );
-
-		// If font is null, reset the selected font
-		if ( ! font ) {
-			setLibraryFontSelected( null );
-			return;
-		}
-
-		const fonts = font.source === 'theme' ? themeFonts : baseCustomFonts;
-
-		// Tries to find the font in the installed fonts
-		const fontSelected = fonts.find( ( f ) => f.slug === font.slug );
-		// If the font is not found (it is only defined in custom styles), use the font from custom styles
-		setLibraryFontSelected( {
-			...( fontSelected || font ),
-			source: font.source,
-		} );
-	};
 
 	// Demo
 	const [ loadedFontUrls ] = useState( new Set() );
@@ -479,15 +452,13 @@ function FontLibraryProvider( { children } ) {
 	return (
 		<FontLibraryContext.Provider
 			value={ {
-				libraryFontSelected,
-				handleSetLibraryFontSelected,
 				baseCustomFonts,
 				loadFontFaceAsset,
 				installFonts,
 				uninstallFontFamily,
 				toggleActivateFont,
-				modalTabOpen,
-				setModalTabOpen,
+				activeModalContent,
+				setActiveModalContent,
 				refreshLibrary,
 				notice,
 				setNotice,

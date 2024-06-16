@@ -26,7 +26,8 @@ import { unlock } from '../../lock-unlock';
 const { useGlobalSetting } = unlock( blockEditorPrivateApis );
 
 function FontFamilies() {
-	const { modalTabOpen, setModalTabOpen } = useContext( FontLibraryContext );
+	const { activeModalContent, setActiveModalContent } =
+		useContext( FontLibraryContext );
 	const [ fontFamilies ] = useGlobalSetting( 'typography.fontFamilies' );
 	const themeFonts = fontFamilies?.theme
 		? fontFamilies.theme
@@ -42,10 +43,10 @@ function FontFamilies() {
 
 	return (
 		<>
-			{ !! modalTabOpen && (
+			{ !! activeModalContent && (
 				<FontLibraryModal
-					onRequestClose={ () => setModalTabOpen( null ) }
-					defaultTabId={ modalTabOpen }
+					onRequestClose={ () => setActiveModalContent( null ) }
+					defaultTabId={ activeModalContent?.tab }
 				/>
 			) }
 
@@ -89,9 +90,9 @@ function FontFamilies() {
 					variant="secondary"
 					__next40pxDefaultSize
 					onClick={ () =>
-						setModalTabOpen(
-							hasFonts ? 'installed-fonts' : 'upload-fonts'
-						)
+						setActiveModalContent( {
+							tab: hasFonts ? 'installed-fonts' : 'upload-fonts',
+						} )
 					}
 				>
 					{ hasFonts ? __( 'Manage fonts' ) : __( 'Add fonts' ) }

@@ -39,9 +39,9 @@ const { useGlobalSetting } = unlock( blockEditorPrivateApis );
 
 function InstalledFonts() {
 	const {
+		activeModalContent,
+		setActiveModalContent,
 		baseCustomFonts,
-		libraryFontSelected,
-		handleSetLibraryFontSelected,
 		refreshLibrary,
 		uninstallFontFamily,
 		isResolvingLibrary,
@@ -90,6 +90,7 @@ function InstalledFonts() {
 		  )
 		: [];
 
+	const libraryFontSelected = activeModalContent?.selectedFont;
 	const customFontFamilyId =
 		libraryFontSelected?.source === 'custom' && libraryFontSelected?.id;
 
@@ -112,6 +113,32 @@ function InstalledFonts() {
 		!! libraryFontSelected &&
 		libraryFontSelected?.source !== 'theme' &&
 		canUserDelete;
+
+	const handleSetLibraryFontSelected = ( font ) => {
+		setNotice( null );
+
+		// If font is null, reset the selected font
+		if ( ! font ) {
+			setActiveModalContent( {
+				...activeModalContent,
+				selectedFont: null,
+			} );
+			return;
+		}
+
+		const fonts = font.source === 'theme' ? themeFonts : baseCustomFonts;
+
+		// Tries to find the font in the installed fonts
+		const fontSelected = fonts.find( ( f ) => f.slug === font.slug );
+		// If the font is not found (it is only defined in custom styles), use the font from custom styles
+		setActiveModalContent( {
+			...activeModalContent,
+			selectedFont: {
+				...( fontSelected || font ),
+				source: font.source,
+			},
+		} );
+	};
 
 	const handleUninstallClick = () => {
 		setIsConfirmDeleteOpen( true );
