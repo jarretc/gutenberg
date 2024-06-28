@@ -8,6 +8,7 @@
 
 ### Bug Fixes
 
+-   `Button`: Improve the aria-disabled focus style ([#62480](https://github.com/WordPress/gutenberg/pull/62480)).
 -   `ComboboxControl`: Fix ComboboxControl reset button when using the keyboard. ([#63410](https://github.com/WordPress/gutenberg/pull/63410))
 -   `Button`: Never apply `aria-disabled` to anchor ([#63376](https://github.com/WordPress/gutenberg/pull/63376)).
 
@@ -83,10 +84,6 @@
 
 -   `DropZone`: rewrite animation without depending on framer-motion. ([#62044](https://github.com/WordPress/gutenberg/pull/62044))
 -   `__experimentalPaletteEdit`: improve the accessibility. ([#62753](https://github.com/WordPress/gutenberg/pull/62753))
-
-### Bug Fixes
-
--   `Button`: Improve the aria-disabled focus style ([#62480](https://github.com/WordPress/gutenberg/pull/62480)).
 
 ### Internal
 
