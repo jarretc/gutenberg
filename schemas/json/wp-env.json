@@ -6,6 +6,7 @@
 			"reference": "https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/"
 		},
 		"wpEnvProperties": {
+			"type": "object",
 			"properties": {
 				"core": {
 					"description": "The WordPress installation to use. If null is specified, wp-env will use the latest production release of WordPress.",
@@ -78,14 +79,19 @@
 				"env": {
 					"description": "The key env is available to override any of the above options on an individual-environment basis.",
 					"type": "object",
-					"default": {},
-					"patternProperties": {
-						"[a-zA-Z]": {
+					"properties": {
+						"development": {
+							"type": "object",
+							"$ref": "#/definitions/wpEnvProperties",
+							"additionalProperties": false
+						},
+						"tests": {
 							"type": "object",
 							"$ref": "#/definitions/wpEnvProperties",
 							"additionalProperties": false
 						}
-					}
+					},
+					"additionalProperties": false
 				}
 			}
 		},
