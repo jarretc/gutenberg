@@ -14,7 +14,11 @@ import { applyFilters } from '@wordpress/hooks';
  * Internal dependencies
  */
 import { isValidIcon, normalizeIconObject, omit } from '../api/utils';
-import { BLOCK_ICON_DEFAULT, DEPRECATED_ENTRY_KEYS } from '../api/constants';
+import {
+	BLOCK_ICON_DEFAULT,
+	DEPRECATED_ENTRY_KEYS,
+	TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE,
+} from '../api/constants';
 
 /** @typedef {import('../api/registration').WPBlockType} WPBlockType */
 
@@ -64,6 +68,24 @@ function mergeBlockVariations(
 	return result;
 }
 
+function stabilizeSupports( rawSupports ) {
+	if ( ! rawSupports ) {
+		return rawSupports;
+	}
+
+	const supports = { ...rawSupports };
+	if ( supports?.typography && typeof supports.typography === 'object' ) {
+		supports.typography = Object.fromEntries(
+			Object.entries( supports.typography ).map( ( [ key, value ] ) => [
+				TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE[ key ] || key,
+				value,
+			] )
+		);
+	}
+
+	return supports;
+}
+
 /**
  * Takes the unprocessed block type settings, merges them with block type metadata
  * and applies all the existing filters for the registered block type.
@@ -104,6 +126,9 @@ export const processBlockType =
 			),
 		};
 
+		// Stabilize any experimental supports before applying filters.
+		blockType.supports = stabilizeSupports( blockType.supports );
+
 		const settings = applyFilters(
 			'blocks.registerBlockType',
 			blockType,
@@ -121,8 +146,11 @@ export const processBlockType =
 		}
 
 		if ( settings.deprecated ) {
-			settings.deprecated = settings.deprecated.map( ( deprecation ) =>
-				Object.fromEntries(
+			settings.deprecated = settings.deprecated.map( ( deprecation ) => {
+				deprecation.supports = stabilizeSupports(
+					deprecation.supports
+				);
+				return Object.fromEntries(
 					Object.entries(
 						// Only keep valid deprecation keys.
 						applyFilters(
@@ -142,8 +170,8 @@ export const processBlockType =
 					).filter( ( [ key ] ) =>
 						DEPRECATED_ENTRY_KEYS.includes( key )
 					)
-				)
-			);
+				);
+			} );
 		}
 
 		if ( ! isPlainObject( settings ) ) {
