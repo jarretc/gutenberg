@@ -1524,6 +1524,18 @@ describe( 'blocks', () => {
 			);
 		} );
 
+		// Check the `usesContext` array is correct.
+		it( 'should reject invalid usesContext property', () => {
+			registerBlockBindingsSource( {
+				name: 'core/testing',
+				label: 'testing',
+				usesContext: 'should be an array',
+			} );
+			expect( console ).toHaveErroredWith(
+				'Block bindings source usesContext must be an array.'
+			);
+		} );
+
 		// Check the `getValue` callback is correct.
 		it( 'should reject invalid getValue callback', () => {
 			registerBlockBindingsSource( {
@@ -1593,6 +1605,7 @@ describe( 'blocks', () => {
 		it( 'should register a valid source', () => {
 			const sourceProperties = {
 				label: 'Valid Source',
+				usesContext: [ 'postId' ],
 				getValue: () => 'value',
 				setValue: () => 'new value',
 				setValues: () => 'new values',
@@ -1615,6 +1628,7 @@ describe( 'blocks', () => {
 				label: 'Valid Source',
 			} );
 			const source = getBlockBindingsSource( 'core/valid-source' );
+			expect( source.usesContext ).toBeUndefined();
 			expect( source.getValue ).toBeUndefined();
 			expect( source.setValue ).toBeUndefined();
 			expect( source.setValues ).toBeUndefined();

@@ -767,6 +767,7 @@ export const unregisterBlockVariation = ( blockName, variationName ) => {
  * @param {Object}   source                    Properties of the source to be registered.
  * @param {string}   source.name               The unique and machine-readable name.
  * @param {string}   [source.label]            Human-readable label.
+ * @param {Array}    [source.usesContext]      Array of context needed by the source only in the editor.
  * @param {Function} [source.getValue]         Function to get the value of the source.
  * @param {Function} [source.setValue]         Function to update the value of the source.
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
@@ -793,6 +794,7 @@ export const registerBlockBindingsSource = ( source ) => {
 	const {
 		name,
 		label,
+		usesContext,
 		getValue,
 		setValue,
 		setValues,
@@ -864,6 +866,12 @@ export const registerBlockBindingsSource = ( source ) => {
 
 	if ( label && typeof label !== 'string' ) {
 		console.error( 'Block bindings source label must be a string.' );
+		return;
+	}
+
+	// Check the `usesContext` property is correct.
+	if ( usesContext && ! Array.isArray( usesContext ) ) {
+		console.error( 'Block bindings source usesContext must be an array.' );
 		return;
 	}
 
