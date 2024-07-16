@@ -384,6 +384,7 @@ export function blockBindingsSources( state = {}, action ) {
 					getPlaceholder: action.getPlaceholder,
 					canUserEditValue:
 						action.canUserEditValue || ( () => false ),
+					getFieldsList: action.getFieldsList,
 				},
 			};
 		case 'REMOVE_BLOCK_BINDINGS_SOURCE':
