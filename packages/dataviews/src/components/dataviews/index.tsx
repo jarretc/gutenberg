@@ -10,7 +10,11 @@ import { useMemo, useState } from '@wordpress/element';
 import { default as DataViewsBulkActions } from '../dataviews-bulk-actions';
 import DataViewsBulkActionsToolbar from '../dataviews-bulk-actions-toolbar';
 import DataViewsContext from '../dataviews-context';
-import DataViewsFilters from '../dataviews-filters';
+import {
+	default as DataViewsFilters,
+	useFilters,
+	FilterVisibilityToggle,
+} from '../dataviews-filters';
 import DataViewsLayout from '../dataviews-layout';
 import DataviewsPagination from '../dataviews-pagination';
 import DataViewsSearch from '../dataviews-search';
@@ -59,6 +63,8 @@ export default function DataViews< Item >( {
 	onChangeSelection,
 }: DataViewsProps< Item > ) {
 	const [ selectionState, setSelectionState ] = useState< string[] >( [] );
+	const [ isShowingFilter, setIsShowingFilter ] =
+		useState< boolean >( false );
 	const isUncontrolled =
 		selectionProperty === undefined || onChangeSelection === undefined;
 	const selection = isUncontrolled ? selectionState : selectionProperty;
@@ -80,6 +86,7 @@ export default function DataViews< Item >( {
 		);
 	}, [ selection, data, getItemId ] );
 
+	const filters = useFilters( _fields, view );
 	return (
 		<DataViewsContext.Provider
 			value={ {
@@ -103,17 +110,19 @@ export default function DataViews< Item >( {
 					justify="start"
 					className="dataviews__view-actions"
 				>
-					<HStack
-						justify="start"
-						className="dataviews-filters__container"
-						wrap
-					>
-						{ search && <DataViewsSearch label={ searchLabel } /> }
-						<DataViewsFilters />
-					</HStack>
+					{ search && <DataViewsSearch label={ searchLabel } /> }
+					<FilterVisibilityToggle
+						filters={ filters }
+						view={ view }
+						onChangeView={ onChangeView }
+						setOpenedFilter={ setOpenedFilter }
+						setIsShowingFilter={ setIsShowingFilter }
+						isShowingFilter={ isShowingFilter }
+					/>
 					<DataViewsBulkActions />
 					<DataViewsViewConfig defaultLayouts={ defaultLayouts } />
 				</HStack>
+				{ isShowingFilter && <DataViewsFilters /> }
 				<DataViewsLayout />
 				<DataviewsPagination />
 				<DataViewsBulkActionsToolbar />

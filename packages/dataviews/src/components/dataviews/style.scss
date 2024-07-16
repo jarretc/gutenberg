@@ -9,7 +9,8 @@
 	flex-direction: column;
 }
 
-.dataviews__view-actions {
+.dataviews__view-actions,
+.dataviews-filters__container {
 	box-sizing: border-box;
 	padding: $grid-unit-20 $grid-unit-60;
 	flex-shrink: 0;
@@ -95,3 +96,4 @@
 		padding-right: $grid-unit-30;
 	}
 }
+
