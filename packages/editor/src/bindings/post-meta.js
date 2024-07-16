@@ -84,7 +84,10 @@ export default {
 		}
 
 		// Remove footnotes from the list of fields
-		delete metaFields.footnotes;
-		return metaFields;
+		return Object.fromEntries(
+			Object.entries( metaFields ).filter(
+				( [ key ] ) => key !== 'footnotes'
+			)
+		);
 	},
 };
