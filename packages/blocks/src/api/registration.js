@@ -771,6 +771,7 @@ export const unregisterBlockVariation = ( blockName, variationName ) => {
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
  * @param {Function} [source.getPlaceholder]   Function to get the placeholder when the value is undefined.
  * @param {Function} [source.canUserEditValue] Function to determine if the user can edit the value.
+ * @param {Function} [source.getFieldsList]    Function to get the lists of fields to expose in the connections panel.
  *
  * @example
  * ```js
@@ -797,6 +798,7 @@ export const registerBlockBindingsSource = ( source ) => {
 		setValues,
 		getPlaceholder,
 		canUserEditValue,
+		getFieldsList,
 	} = source;
 
 	// Check if the source is already registered.
@@ -880,6 +882,14 @@ export const registerBlockBindingsSource = ( source ) => {
 	// Check the `getPlaceholder` property is correct.
 	if ( canUserEditValue && typeof canUserEditValue !== 'function' ) {
 		warning( 'Block bindings source canUserEditValue must be a function.' );
+		return;
+	}
+
+	// Check the `getFieldsList` property is correct.
+	if ( getFieldsList && typeof getFieldsList !== 'function' ) {
+		console.error(
+			'Block bindings source getFieldsList must be a function.'
+		);
 		return;
 	}
 
