@@ -58,6 +58,7 @@ export function useShowBlockTools() {
 			showBlockToolbarPopover: _showBlockToolbarPopover,
 			showZoomOutToolbar:
 				editorMode === 'zoom-out' &&
+				block?.attributes?.align === 'full' &&
 				! _showEmptyBlockSideInserter &&
 				! maybeShowBreadcrumb &&
 				! _showBlockToolbarPopover,
