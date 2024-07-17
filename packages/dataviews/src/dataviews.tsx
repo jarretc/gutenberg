@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 /**
  * WordPress dependencies
@@ -51,6 +51,7 @@ type DataViewsProps< Item > = {
 	defaultLayouts: SupportedLayouts;
 	selection?: string[];
 	onChangeSelection?: ( items: string[] ) => void;
+	header?: ReactNode;
 } & ( Item extends ItemWithId
 	? { getItemId?: ( item: Item ) => string }
 	: { getItemId: ( item: Item ) => string } );
@@ -71,6 +72,7 @@ export default function DataViews< Item >( {
 	defaultLayouts,
 	selection: selectionProperty,
 	onChangeSelection,
+	header,
 }: DataViewsProps< Item > ) {
 	const [ selectionState, setSelectionState ] = useState< string[] >( [] );
 	const isUncontrolled =
@@ -145,6 +147,7 @@ export default function DataViews< Item >( {
 					onChangeView={ onChangeView }
 					defaultLayouts={ defaultLayouts }
 				/>
+				{ header }
 			</HStack>
 			<ViewComponent
 				actions={ actions }
