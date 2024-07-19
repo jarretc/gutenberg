@@ -43,8 +43,14 @@ export function useShowBlockTools() {
 			! hasMultiSelection() &&
 			editorMode === 'navigation';
 
+		const _showZoomOutToolbar =
+			editorMode === 'zoom-out' &&
+			block?.attributes?.align === 'full' &&
+			! _showEmptyBlockSideInserter &&
+			! maybeShowBreadcrumb;
+
 		const _showBlockToolbarPopover =
-			editorMode !== 'zoom-out' &&
+			! _showZoomOutToolbar &&
 			! getSettings().hasFixedToolbar &&
 			! _showEmptyBlockSideInserter &&
 			hasSelectedBlock &&
@@ -56,12 +62,7 @@ export function useShowBlockTools() {
 			showBreadcrumb:
 				! _showEmptyBlockSideInserter && maybeShowBreadcrumb,
 			showBlockToolbarPopover: _showBlockToolbarPopover,
-			showZoomOutToolbar:
-				editorMode === 'zoom-out' &&
-				block?.attributes?.align === 'full' &&
-				! _showEmptyBlockSideInserter &&
-				! maybeShowBreadcrumb &&
-				! _showBlockToolbarPopover,
+			showZoomOutToolbar: _showZoomOutToolbar,
 		};
 	}, [] );
 }
