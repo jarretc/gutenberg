@@ -256,8 +256,13 @@
 	}
 }
 
+.dataviews-filters__visibility-toggle {
+	margin-left: -$grid-unit-05;
+}
+
 .dataviews-filters-toggle__container {
 	position: relative;
+	flex-shrink: 0;
 }
 
 .dataviews-filters-toggle__count {

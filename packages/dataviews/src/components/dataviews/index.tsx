@@ -111,6 +111,8 @@ export default function DataViews< Item >( {
 					className="dataviews__view-actions"
 				>
 					{ search && <DataViewsSearch label={ searchLabel } /> }
+					<DataViewsBulkActions />
+					<DataViewsViewConfig defaultLayouts={ defaultLayouts } />
 					<FilterVisibilityToggle
 						filters={ filters }
 						view={ view }
@@ -119,8 +121,6 @@ export default function DataViews< Item >( {
 						setIsShowingFilter={ setIsShowingFilter }
 						isShowingFilter={ isShowingFilter }
 					/>
-					<DataViewsBulkActions />
-					<DataViewsViewConfig defaultLayouts={ defaultLayouts } />
 				</HStack>
 				{ isShowingFilter && <DataViewsFilters /> }
 				<DataViewsLayout />

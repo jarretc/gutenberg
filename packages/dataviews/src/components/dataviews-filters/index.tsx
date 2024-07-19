@@ -103,6 +103,7 @@ export function FilterVisibilityToggle( {
 				setOpenedFilter={ setOpenedFilter }
 				trigger={
 					<Button
+						className="dataviews-filters__visibility-toggle"
 						size="compact"
 						icon={ funnel }
 						label={ __( 'Add filter' ) }
@@ -116,6 +117,7 @@ export function FilterVisibilityToggle( {
 	return (
 		<>
 			<Button
+				className="dataviews-filters__visibility-toggle"
 				size="compact"
 				icon={ funnel }
 				label={ __( 'Toggle filter display' ) }
