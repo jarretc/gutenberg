@@ -79,7 +79,8 @@
 
 /* stylelint-disable-next-line scss/at-rule-no-unknown -- '@container' not globally permitted */
 @container (max-width: 430px) {
-	.dataviews__view-actions {
+	.dataviews__view-actions,
+	.dataviews-filters__container {
 		padding: $grid-unit-15 $grid-unit-30;
 
 		.components-search-control {
