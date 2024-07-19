@@ -16,29 +16,16 @@ import { store as editorStore } from '../../store';
 
 const COMMENT_OPTIONS = [
 	{
-		label: (
-			<>
-				{ __( 'Open' ) }
-				<Text variant="muted" size={ 12 }>
-					{ __( 'Visitors can add new comments and replies.' ) }
-				</Text>
-			</>
-		),
+		label: __( 'Open' ),
 		value: 'open',
+		helpText: __( 'Visitors can add new comments and replies.' ),
 	},
 	{
-		label: (
-			<>
-				{ __( 'Closed' ) }
-				<Text variant="muted" size={ 12 }>
-					{ __( 'Visitors cannot add new comments or replies.' ) }
-				</Text>
-				<Text variant="muted" size={ 12 }>
-					{ __( 'Existing comments remain visible.' ) }
-				</Text>
-			</>
-		),
+		label: __( 'Closed' ),
 		value: 'closed',
+		helpText: `${ __(
+			'Visitors cannot add new comments or replies.'
+		) } ${ __( 'Existing comments remain visible.' ) }`,
 	},
 ];
 
