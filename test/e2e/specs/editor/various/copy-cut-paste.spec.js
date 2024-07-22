@@ -478,6 +478,23 @@ test.describe( 'Copy/cut/paste', () => {
 		).toBe( 'axyb' );
 	} );
 
+	test( 'should paste formatted text into focusable element', async ( {
+		page,
+		pageUtils,
+		editor,
+	} ) => {
+		await editor.canvas
+			.locator( 'role=button[name="Add default block"i]' )
+			.click();
+		await page.keyboard.type( 'test' );
+		await pageUtils.pressKeys( 'primary+a' );
+		await pageUtils.pressKeys( 'primary+b' );
+		await pageUtils.pressKeys( 'primary+c' );
+		await page.keyboard.press( 'ArrowRight' );
+		await pageUtils.pressKeys( 'primary+v' );
+		expect( await editor.getEditedPostContent() ).toMatchSnapshot();
+	} );
+
 	test( 'should paste preformatted in list', async ( {
 		page,
 		pageUtils,
