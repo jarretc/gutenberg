@@ -38,7 +38,7 @@ In most interactions, a user should be able to undo and redo their actions. With
 
 ##### Expediting tasks
 
-When one a choice in a set of radio buttons is the most desirable or frequently selected, it’s helpful to select it by default. Doing this reduces the interaction cost and can save the user time and clicks.
+When one choice in a set of radio buttons is the most desirable or frequently selected, it’s helpful to select it by default. Doing this reduces the interaction cost and can save the user time and clicks.
 
 ##### The power of suggestion
 
